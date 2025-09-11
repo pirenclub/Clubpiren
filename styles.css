@@ -90,3 +90,16 @@ nav#nav a:hover{background:var(--brand-2)}
   .logo-img{height:40px}
   .whatsapp-fab{width:52px;height:52px;font-size:22px}
 }
+.frase {
+  text-align: center;
+  font-size: 1.5em;
+  font-style: italic;
+  margin: 50px 0;
+  color: #444;
+  animation: fadeIn 3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
