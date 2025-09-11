@@ -103,3 +103,17 @@ nav#nav a:hover{background:var(--brand-2)}
   from { opacity: 0; }
   to   { opacity: 1; }
 }
+.frase {
+  text-align: center;
+  font-size: 1.6em;
+  font-style: italic;
+  margin: 40px 20px;
+  color: #2c3e50; /* un gris azulado elegante */
+  font-weight: 500;
+  animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
