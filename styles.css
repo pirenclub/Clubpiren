@@ -130,71 +130,52 @@ nav#nav a:hover{background:var(--brand-2)}
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-/* Colores base */
+/* Paleta */
 :root{
-  --rosa:#E96A93;          /* rosa principal */
-  --rosa-suave:#FFF1F6;    /* fondo rosado muy suave */
-  --rosa-borde:#FFC7DA;    /* borde rosado */
-  --texto-rosa:#B24E73;    /* texto rosado más oscuro */
+  --rosa:#E96A93;
+  --rosa-suave:#FFF1F6;
+  --rosa-borde:#FFC7DA;
+  --texto-rosa:#B24E73;
 }
 
-/* Caja de la frase */
-.frase{
+/* Tarjeta de frase */
+section.frase{
+  position: relative;
+  overflow: hidden;                 /* para que la animación no se salga */
   max-width: 900px;
   margin: 48px auto;
   padding: 24px 28px;
-  background: linear-gradient(180deg, #fff 0%, var(--rosa-suave) 100%);
+  background: linear-gradient(180deg,#fff 0%, var(--rosa-suave) 100%);
   border: 1px solid var(--rosa-borde);
   border-radius: 16px;
-  box-shadow: 0 10px 28px rgba(233,106,147,0.10);
-  position: relative;
+  box-shadow: 0 10px 28px rgba(233,106,147,.10);
   transition: transform .25s ease, box-shadow .25s ease;
-  animation: fraseFade .6s ease both;
 }
 
-/* Comillas decorativas */
-.frase::before{
-  content: "“";
-  position: absolute;
-  top: -10px;
-  left: 14px;
-  font-size: 64px;
-  line-height: 1;
-  color: var(--rosa-borde);
-  opacity: .5;
-  pointer-events: none;
-}
-
-/* Texto */
-.frase p{
+/* ¡color asegurado! */
+section.frase p{
   margin: 0;
   text-align: center;
-  font-size: 1.2rem;        /* subí o bajá si querés */
+  font-size: 1.2rem;
   font-style: italic;
-  color: var(--texto-rosa);
+  color: var(--texto-rosa) !important;  /* fuerza el color rosa */
   font-weight: 600;
   letter-spacing: .2px;
 }
 
-/* Interacción (hover/touch) */
-.frase:hover,
-.frase:active{
+/* Hover/touch: levanta y brilla */
+section.frase:hover,
+section.frase:active{
   transform: translateY(-3px);
-  box-shadow: 0 14px 34px rgba(233,106,147,0.18);
+  box-shadow: 0 14px 34px rgba(233,106,147,.18);
 }
 
-/* Subrayado animado al pasar */
-.frase p{
+/* Subrayado animado */
+section.frase p{
   background: linear-gradient(currentColor, currentColor) center bottom / 0 2px no-repeat;
   transition: background-size .35s ease;
 }
-.frase:hover p,
-.frase:active p{
+section.frase:hover p,
+section.frase:active p{
   background-size: 100% 2px;
-}
-
-/* Aparición suave */
-@keyframes fraseFade{
-  from{ opacity:0; transform: translateY(10px); }
-  to{   opacity:1; transform: translateY(0);     }
 }
