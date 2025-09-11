@@ -1,0 +1,92 @@
+
+:root{
+  --brand:#1aa39a;
+  --brand-2:#d0f2ee;
+  --dark:#1e1e1e;
+  --muted:#6b6b6b;
+  --bg:#fff;
+  --alt:#f6fbfa;
+  --radius:14px;
+  --shadow:0 10px 30px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--dark);background:var(--bg)}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--brand);text-decoration:none}
+.container{max-width:1100px;margin:auto;padding:0 16px}
+.narrow{max-width:850px}
+.brand{color:var(--brand)}
+.brand-border{border:2px solid var(--brand); padding:12px 16px; border-radius:var(--radius); background:#fff}
+.mini{font-size:.9rem;color:var(--muted)}
+.divider{margin:40px 0;border:none;height:1px;background:#eee}
+
+/* Header centered */
+.topbar{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid #eee}
+.topbar .container{min-height:68px}
+.header-grid{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;position:relative}
+.logo-img{height:44px;width:auto}
+.logo-img-footer{height:40px;width:auto}
+.menu-toggle{justify-self:end;display:none;background:transparent;border:2px solid var(--brand);color:var(--brand);border-radius:10px;padding:8px 12px}
+nav#nav{justify-self:end;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+nav#nav a{padding:10px 12px;border-radius:10px}
+nav#nav a:hover{background:var(--brand-2)}
+
+/* Buttons */
+.btn{background:var(--brand);color:#fff;padding:12px 18px;border-radius:12px;display:inline-block;box-shadow:var(--shadow)}
+.btn:hover{transform:translateY(-1px)}
+.btn-outline{border:2px solid var(--brand);color:var(--brand);background:transparent}
+.btn-full{width:100%;text-align:center}
+
+/* Hero */
+.hero{background:linear-gradient(180deg, #fff, var(--alt)); padding:40px 0 56px}
+.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:stretch}
+.hero-copy h1{font-size:clamp(1.6rem, 3.5vw, 2.3rem);margin:0 0 12px}
+.hero-copy p{color:var(--muted);font-size:clamp(1rem, 2.5vw, 1.05rem)}
+.cta{display:flex;gap:12px;margin:18px 0;flex-wrap:wrap}
+.trust{margin-top:8px;color:#333;font-size:.95rem}
+.hero-card{background:#fff;border-radius:var(--radius);padding:20px;border:1px solid #eee;box-shadow:var(--shadow);position:relative}
+.hero-card .badge{position:absolute;top:-10px;right:-10px;background:var(--brand);color:#fff;padding:6px 10px;border-radius:999px;font-size:.8rem}
+
+/* Sections */
+.section{padding:48px 0}
+.section.alt{background:var(--alt)}
+.section h2{margin-top:0;font-size:clamp(1.5rem,3vw,1.9rem)}
+
+/* Cards & grids */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{background:#fff;border:1px solid #eee;border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+.place{background:#fff;border:1px solid #eee;border-radius:var(--radius);padding:0 0 16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.place .tag{position:absolute;top:10px;left:10px;background:var(--brand);color:#fff;padding:4px 10px;border-radius:999px;font-size:.8rem}
+.place-img{width:100%;height:180px;object-fit:cover}
+.plan{background:#fff;border:1px solid #eee;border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+
+/* Footer */
+.footer{background:#111;color:#eee;padding:30px 0}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:18px}
+.footer .links{list-style:none;margin:0;padding:0}
+.footer .links li{margin:8px 0}
+.footer .bullets{list-style:disc;margin:0 0 0 16px;padding:0}
+.copy{text-align:center;margin-top:16px;color:#bbb}
+
+/* WhatsApp FAB */
+.whatsapp-fab{position:fixed;right:16px;bottom:16px;background:var(--brand);color:#fff;width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:var(--shadow)}
+.whatsapp-fab:hover{transform:translateY(-1px)}
+
+/* Responsive */
+@media (max-width: 900px){
+  .hero-grid{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr}
+  .grid-2{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  nav#nav{display:none; position:absolute; top:68px; right:0; left:0; background:#fff; border-bottom:1px solid #eee; padding:12px; flex-direction:column}
+  nav#nav.show{display:flex}
+  .menu-toggle{display:inline-block}
+  .topbar .container{position:relative}
+  .place-img{height:200px}
+}
+@media (max-width: 480px){
+  .container{padding:0 12px}
+  .logo-img{height:40px}
+  .whatsapp-fab{width:52px;height:52px;font-size:22px}
+}
