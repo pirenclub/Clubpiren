@@ -57,10 +57,38 @@
           <a class="btn btn-full" href="https://docs.google.com/forms/d/e/1FAIpQLScte_rO5VTqjBPPrdweujW_Q-cXA0JvRn-HiU1AWJVXxFhbig/viewform?usp=header" target="_blank" rel="noopener">Empezar ahora</a>
         </div>
       </div>
-    </section>
-    <section class="frase">
-  <p>"Viajar es coleccionar momentos, no cosas."</p>
+<section class="frase">
+  <p id="frase-dinamica">"..."</p>
 </section>
+
+<!-- Poné este script ANTES del </body> -->
+<script>
+  const FRASES = [
+    "Viajar es coleccionar momentos, no cosas.",
+    "El mundo es un libro, y quienes no viajan leen solo una página.",
+    "Viajar es vivir dos veces.",
+    "No mires el reloj: ve a donde sientas que el tiempo vale la pena.",
+    "Las mejores historias empiezan con un pasaje.",
+    "Cambiar de paisaje, renovar el alma.",
+    "Donde vayas, ve con todo tu corazón.",
+    "Los recuerdos no caben en una valija, pero sí en un viaje.",
+    "La vida es corta y el mundo enorme.",
+    "Las montañas llaman, el mar espera."
+  ];
+
+  function elegirFrase() {
+    const el = document.getElementById("frase-dinamica");
+    if (!el) return;
+    const i = Math.floor(Math.random() * FRASES.length);
+    el.textContent = `“${FRASES[i]}”`;
+  }
+
+  // 1) Al cargar la página, muestra una al azar
+  document.addEventListener("DOMContentLoaded", elegirFrase);
+
+  // 2) (Opcional) Rotar cada 6 segundos:
+  // setInterval(elegirFrase, 6000);
+</script>
 
 
     <section id="beneficios" class="section">
