@@ -179,3 +179,29 @@ section.frase:hover p,
 section.frase:active p{
   background-size: 100% 2px;
 }
+/* Elemento que vuela/maneja */
+section.frase::after{
+  content: "✈️";                 /* cambiá por "🚗" si querés auto */
+  position: absolute;
+  top: -6px;                     /* para ✈️; si usás 🚗 probá bottom: -6px; top:auto; */
+  left: -64px;
+  font-size: 28px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Estados que disparan la animación */
+section.frase.fly-plane::after{ animation: planeAcross 1.2s ease-in-out forwards; }
+section.frase.fly-car::after{   animation: carAcross 1.4s ease-in-out forwards; }
+
+/* Trayectorias */
+@keyframes planeAcross{
+  0%   { transform: translateX(0)   translateY(0) rotate(-10deg); opacity:0; }
+  10%  { opacity:1; }
+  100% { transform: translateX(110vw) translateY(0) rotate(5deg); opacity:0; }
+}
+@keyframes carAcross{
+  0%   { left: -80px; opacity:0; }
+  10%  { opacity:1; }
+  100% { left: calc(100% + 80px); opacity:0; }
+}
