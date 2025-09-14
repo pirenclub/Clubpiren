@@ -60,31 +60,6 @@
 <section class="frase"> <p </p>
 </section>
 
-<script>
-  // caja de la frase
-  const box = document.querySelector('section.frase');
-
-  function triggerAnim(kind = 'plane'){
-    if(!box) return;
-    // resetea para poder re-disparar
-    box.classList.remove('fly-plane','fly-car');
-    void box.offsetWidth; // reflow hack
-    box.classList.add(kind === 'car' ? 'fly-car' : 'fly-plane');
-  }
-
-  // Dispara en hover/click/touch
-  ['mouseenter','click','touchstart'].forEach(evt=>{
-    box?.addEventListener(evt, ()=> triggerAnim('plane')); // o 'car'
-  });
-
-  // Si querés alternar avión/auto en cada toque:
-  // let toggle = false;
-  // ['click','touchstart'].forEach(evt=>{
-  //   box?.addEventListener(evt, ()=> { toggle = !toggle; triggerAnim(toggle?'car':'plane'); });
-  // });
-</script>
-
-
 <!-- Poné este script ANTES del </body> -->
 <script>
   const FRASES = [
