@@ -4,7 +4,115 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Club Pirén — Vacaciones flexibles en Argentina</title>
-  <meta name="description" content="Conocé Club Pirén: semanas fijas y flexibles, destinos en Iguazú, Córdoba y San Martín de los Andes, y beneficios para viajar con tranquilidad." />
+<!-- FRASE CON AVIÓN "FLY-BY" -->
+<div class="flyby tagline" aria-label="Frase destacada con animación de avión">
+  <span class="text">Viajá con Piren — club de vacaciones</span>
+  <span class="plane" aria-hidden="true">
+    <!-- Avión SVG simple (no emoji) -->
+    <svg viewBox="0 0 200 100" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+      <g fill="currentColor">
+        <!-- cuerpo + nariz -->
+        <path d="M4 48 L120 48 L160 34 L172 34 L160 50 L172 66 L160 66 L120 52 L4 52 Z"/>
+        <!-- ala superior -->
+        <path d="M58 44 L40 33 L46 26 L92 40 Z"/>
+        <!-- ala inferior -->
+        <path d="M58 56 L92 60 L46 74 L40 67 Z"/>
+        <!-- cola -->
+        <path d="M120 48 L140 38 L138 50 L140 62 Z"/>
+      </g>
+    </svg>
+  </span>
+</div>
+
+<style>
+  :root{
+    --accent: #ff6fa5;      /* rosa suave de la frase */
+    --duration: 2.8s;       /* velocidad del vuelo */
+    --plane-size: 2.2em;    /* tamaño del avión */
+  }
+
+  .tagline{
+    position: relative;
+    display: inline-block;
+    font-weight: 800;
+    font-size: clamp(20px, 4vw, 42px);
+    line-height: 1.15;
+    color: var(--accent);
+    letter-spacing: 0.3px;
+  }
+
+  .tagline .plane{
+    position: absolute;
+    left: -15vmin; top: 0;
+    width: var(--plane-size);
+    aspect-ratio: 2 / 1;   /* ayuda a mantener proporción */
+    display: block;
+    opacity: 0;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
+  }
+
+  .tagline .plane svg{ display:block }
+
+  /* Estela */
+  .tagline .plane::before{
+    content:"";
+    position:absolute;
+    right: 35%;
+    top: 56%;
+    height: 2px;
+    width: 0;
+    background: linear-gradient(to left, rgba(255,255,255,.95), rgba(255,255,255,0));
+    box-shadow: 0 0 10px rgba(255,255,255,.9);
+    opacity: 0;
+  }
+
+  /* Animaciones */
+  @keyframes fly{
+    0%   { transform: translate(-18vmin, 2vmin) rotate(-8deg) scale(.95); opacity:0 }
+    15%  { opacity:1 }
+    50%  { transform: translate(38vmin, -1vmin) rotate(0deg)  scale(1.00); }
+    100% { transform: translate(102vmin, -4vmin) rotate(8deg) scale(1.05); opacity:0 }
+  }
+  @keyframes contrail{
+    0%,15% { width:0; opacity:0 }
+    30%    { opacity:.9 }
+    100%   { width:30vmin; opacity:0 }
+  }
+
+  /* Disparadores: hover (desktop) o clase JS para mobile */
+  .flyby:hover .plane,
+  .flyby.is-animating .plane{
+    animation: fly var(--duration) ease-in-out forwards;
+  }
+  .flyby:hover .plane::before,
+  .flyby.is-animating .plane::before{
+    animation: contrail calc(var(--duration)*.9) linear forwards;
+  }
+
+  /* Respeta personas con “reducir movimiento” */
+  @media (prefers-reduced-motion: reduce){
+    .flyby:hover .plane, .flyby.is-animating .plane{ animation:none; opacity:0 }
+    .flyby:hover .plane::before, .flyby.is-animating .plane::before{ animation:none; opacity:0 }
+  }
+</style>
+
+<script>
+  // Soporte para toque/click en mobile
+  document.querySelectorAll('.flyby').forEach(el=>{
+    const trigger = () => {
+      el.classList.remove('is-animating'); // reinicia si estaba a mitad
+      void el.offsetWidth;                 // reflow para reiniciar anim
+      el.classList.add('is-animating');
+      // quita la clase cuando termina
+      const dur = parseFloat(getComputedStyle(el).getPropertyValue('--duration')) || 3;
+      setTimeout(()=> el.classList.remove('is-animating'), dur*1000 + 50);
+    };
+    el.addEventListener('click', trigger);
+    el.addEventListener('touchstart', trigger, {passive:true});
+  });
+</script>
+
+    <meta name="description" content="Conocé Club Pirén: semanas fijas y flexibles, destinos en Iguazú, Córdoba y San Martín de los Andes, y beneficios para viajar con tranquilidad." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
