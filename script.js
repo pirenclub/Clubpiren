@@ -23,3 +23,16 @@ function mobileMenu(){
 }
 
 document.addEventListener('DOMContentLoaded', () => { setYear(); setWhatsAppLinks(); mobileMenu(); });
+// Tap/click en móvil y desktop para disparar la animación
+document.querySelectorAll('.piren-quote-plane').forEach(el=>{
+  const go = ()=>{
+    el.classList.remove('is-animating');
+    void el.offsetWidth; // reinicia
+    el.classList.add('is-animating');
+    const root = getComputedStyle(document.documentElement);
+    const dur = parseFloat(root.getPropertyValue('--plane-speed')) || 3.6;
+    setTimeout(()=> el.classList.remove('is-animating'), dur*1000+80);
+  };
+  el.addEventListener('click', go);
+  el.addEventListener('touchstart', go, {passive:true});
+});
