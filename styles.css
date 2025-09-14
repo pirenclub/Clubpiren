@@ -338,3 +338,8 @@ body.is-loaded {
 
 /* Navegación suave a anclas (#destinos, etc.) */
 html { scroll-behavior: smooth; }
+/* HOTFIX: asegura que la página sea visible */
+body { 
+  opacity: 1 !important; 
+  transform: none !important; 
+}
