@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Playground avión — Piren</title>
+<style>
+  :root{
+    --plane-speed: 3.6s;  /* velocidad */
+    --plane-size: 28px;   /* tamaño avión */
+    --track-h: 120px;     /* alto de la ruta bajo la frase */
+  }
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;margin:20px}
+  h1{font-size:20px;margin:0 0 12px}
+  .controls{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;margin:12px 0 16px}
+  .controls label{font-size:14px;color:#444}
+  .controls input, .controls select{padding:8px;border:1px solid #ddd;border-radius:8px}
+
+  /* componente */
+  .piren-quote-plane{
+    position:relative; display:block; text-align:center; color:#C03B74;
+    background:linear-gradient(180deg,#ffe6f0,#fff); border:1px solid #ffc2d6;
+    padding:18px; border-radius:16px; box-shadow:0 6px 16px rgba(0,0,0,.06);
+  }
+  .piren-quote-plane .quote-text{ font-weight:800; font-size: clamp(18px,4vw,28px); }
+  .piren-quote-plane .route-wrap{ position:relative; height:var(--track-h); margin-top:8px; overflow:visible; }
+  .piren-quote-plane svg.route{ position:absolute; inset:0; width:100%; height:100%; }
+  .piren-quote-plane svg.route path{
+    fill:none; stroke:currentColor; stroke-width:3; stroke-linecap:round; stroke-dasharray:10 10; opacity:.9;
+  }
+  .piren-quote-plane .plane{
+    position:absolute; inset:0; width:var(--plane-size); height:var(--plane-size);
+    offset-rotate:auto 90deg; transform:translate(-50%,-50%); opacity:0;
+    filter:drop-shadow(0 2px 6px rgba(0,0,0,.25));
+  }
+  @keyframes follow{
+    0%{offset-distance:0%;opacity:0} 10%{opacity:1} 92%{opacity:1} 100%{offset-distance:100%;opacity:0}
+  }
+  .piren-quote-plane:hover .plane,
+  .piren-quote-plane.is-animating .plane{ animation: follow var(--plane-speed) ease-in-out forwards; }
+  .piren-quote-plane.autoplay .plane{ animation: follow var(--plane-speed) ease-in-out infinite; opacity:1; }
+
+  @supports not (offset-path: path("M0,0 L1,1")){ .piren-quote-plane .plane{display:none} }
+  @media (prefers-reduced-motion: reduce){ .piren-quote-plane .plane{animation:none!important;opacity:0!important} }
+
+  /* mini UI */
+  .export{margin-top:12px;font-size:12px;color:#555}
+  .export code{display:block;white-space:nowrap;overflow:auto;background:#f7f7f7;border:1px solid #eee;border-radius:8px;padding:8px}
+  button#animate{padding:10px 12px;border:0;border-radius:10px;background:#19a38c;color:#fff;font-weight:700}
+</style>
+</head>
+<body>
+
+<h1>Playground ✈️ (elegí ruta, color, velocidad y probá)</h1>
+<div class="controls">
+  <label>Frase
+    <input id="txt" value="“Las mejores historias empiezan con un pasaje.”">
+  </label>
+  <label>Ruta
+    <select id="route">
+      <option value="wave">Ola suave</option>
+      <option value="swoop">Swoop (sube y baja)</option>
+      <option value="s">S en zig-zag</option>
+      <option value="arc">Arco</option>
+      <option value="heart">Con bucle de corazón</option>
+    </select>
+  </label>
+  <label>Color
+    <input id="color" type="color" value="#C03B74">
+  </label>
+  <label>Velocidad (s)
+    <input id="speed" type="range" min="1" max="8" step="0.1" value="3.6">
+  </label>
+  <label>Tamaño avión (px)
+    <input id="size" type="range" min="16" max="60" step="1" value="28">
+  </label>
+  <label>Altura de ruta
+    <input id="height" type="range" min="80" max="200" step="2" value="120">
+  </label>
+</div>
+
+<div class="piren-quote-plane" id="demo">
+  <span class="quote-text" id="quote">“Las mejores historias empiezan con un pasaje.”</span>
+  <div class="route-wrap">
+    <svg class="route" viewBox="0 0 1000 160" aria-hidden="true">
+      <path id="routePath" d="M 20,90 C 160,30 260,130 360,90 C 430,65 490,80 560,90 C 600,55 640,40 680,65 C 700,80 680,100 655,96 C 630,92 625,130 690,128 C 820,125 900,95 980,105"/>
+    </svg>
+    <span class="plane" id="plane">
+      <svg viewBox="0 0 200 100" width="100%" height="100%">
+        <g fill="currentColor">
+          <path d="M4 48 L120 48 L160 34 L172 34 L160 50 L172 66 L160 66 L120 52 L4 52 Z"/>
+          <path d="M58 44 L40 33 L46 26 L92 40 Z"/>
+          <path d="M58 56 L92 60 L46 74 L40 67 Z"/>
+          <path d="M120 48 L140 38 L138 50 L140 62 Z"/>
+        </g>
+      </svg>
+    </span>
+  </div>
+</div>
+
+<p style="margin:14px 0">
+  <button id="animate">Probar animación</button>
+  <label style="margin-left:10px;font-size:14px">
+    <input type="checkbox" id="autoplay"> Autoplay
+  </label>
+</p>
+
+<div class="export">
+  <strong>Path actual (copiá esto en tu sitio):</strong>
+  <code id="pathOut">M 20,90 C 160,30 260,130 360,90 C 430,65 490,80 560,90 C 600,55 640,40 680,65 C 700,80 680,100 655,96 C 630,92 625,130 690,128 C 820,125 900,95 980,105</code>
+  <div style="margin-top:6px">En tu web pegalo en <em>dos lugares</em>:<br>1) CSS → <code>offset-path: path("...")</code><br>2) SVG → <code>&lt;path d="..."&gt;</code></div>
+</div>
+
+<script>
+const paths = {
+  wave:  'M 20,90 C 160,30 260,130 360,90 C 430,65 490,80 560,90 C 600,55 640,40 680,65 C 700,80 680,100 655,96 C 630,92 625,130 690,128 C 820,125 900,95 980,105',
+  swoop: 'M 0,120 C 200,90 380,50 520,80 C 700,120 820,60 1000,85',
+  s:     'M 0,95 C 250,145 250,45 500,95 C 750,145 750,45 1000,95',
+  arc:   'M 0,120 C 250,60 750,60 1000,120',
+  heart: 'M 40,100 C 160,35 210,150 290,100 C 330,80 355,60 395,78 C 430,95 430,120 470,114 C 600,100 740,90 980,110'
+};
+
+const demo = document.getElementById('demo');
+const quote = document.getElementById('quote');
+const plane = document.getElementById('plane');
+const routePath = document.getElementById('routePath');
+const out = document.getElementById('pathOut');
+
+function setPath(d){
+  out.textContent = d;
+  routePath.setAttribute('d', d);
+  plane.style.offsetPath = `path("${d}")`;
+}
+
+document.getElementById('route').addEventListener('change', e=> setPath(paths[e.target.value]));
+document.getElementById('txt').addEventListener('input', e=> quote.textContent = e.target.value);
+document.getElementById('color').addEventListener('input', e=> demo.style.color = e.target.value);
+document.getElementById('speed').addEventListener('input', e=> {
+  document.documentElement.style.setProperty('--plane-speed', `${e.target.value}s`);
+});
+document.getElementById('size').addEventListener('input', e=> {
+  document.documentElement.style.setProperty('--plane-size', `${e.target.value}px`);
+});
+document.getElementById('height').addEventListener('input', e=>{
+  document.documentElement.style.setProperty('--track-h', `${e.target.value}px`);
+});
+
+document.getElementById('animate').addEventListener('click', ()=>{
+  demo.classList.remove('is-animating'); void demo.offsetWidth; demo.classList.add('is-animating');
+  const dur = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--plane-speed')) || 3.6;
+  setTimeout(()=> demo.classList.remove('is-animating'), dur*1000+80);
+});
+document.getElementById('autoplay').addEventListener('change', e=>{
+  demo.classList.toggle('autoplay', e.target.checked);
+});
+
+// init
+setPath(paths.wave);
+</script>
+</body>
+</html>
