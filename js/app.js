@@ -79,7 +79,7 @@ function initAddFunds(){
   const curr = $("#depositCurrency");
   function update(){
     const text = encodeURIComponent(`Hola, quiero cargar ${amount.value||0} ${curr.value}. Adjunto comprobante.`);
-    const phone = "5491112345678"; // Cambiar por tu número real
+    const phone = "3757619102"; // Cambiar por tu número real
     wa.href = `https://wa.me/${phone}?text=${text}`;
   }
   amount.addEventListener("input", update);
