@@ -31,3 +31,74 @@ menu{display:flex;justify-content:flex-end;gap:.6rem;margin:1rem 0 0 0}.btn{back
 .drawer a{display:block;color:#e8ecf2;text-decoration:none;padding:.6rem .2rem;border-radius:8px}.drawer a:hover{background:#141c2b}
 .topbar .brand{height:34px;margin-left:.2rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,.35))}
 @media (max-width:380px){.topbar{flex-wrap:wrap}.top-actions{order:3;width:100%;justify-content:flex-end}}
+/* ===== Mejora visual, interacciones y layout ===== */
+
+/* Fondo con sutil textura */
+body{
+  background:
+    radial-gradient(1200px 600px at -10% -10%, rgba(80,120,255,.06), transparent 70%),
+    radial-gradient(1200px 600px at 110% -10%, rgba(120,220,180,.06), transparent 70%),
+    var(--bg);
+}
+
+/* Cards: 3D suave + foco accesible */
+.cards .card{
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  border: 1px solid rgba(255,255,255,.04);
+}
+.cards .card:hover{ transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,.45);}
+.cards .card:focus-within{ outline: 2px solid #3aa8ff44; }
+
+/* Chips más “pill” y sticky */
+.filters{ position: sticky; top: 56px; z-index: 5; background: linear-gradient(180deg, rgba(12,15,20,.9), rgba(12,15,20,0)); padding-top:.4rem; }
+.chip{ transition: transform .15s ease, background .2s ease, border-color .2s ease; }
+.chip:active{ transform: scale(.96); }
+
+/* Barra de búsqueda */
+.searchbar{ display:flex; gap:.5rem; align-items:center; padding: .2rem .4rem .6rem; }
+.searchbar .input{ flex:1; margin:0; }
+.searchbar input{
+  background:#0d1220; border:1px solid #233052; color:#e8ecf2;
+  border-radius:12px; padding:.6rem .8rem;
+}
+.searchbar .icon-btn{ width:40px; height:40px; }
+
+/* Rail de proveedores */
+.providers-rail{ display:flex; gap:.6rem; overflow:auto; padding:.4rem .6rem .8rem; }
+.provider-chip{
+  background:#111725; border:1px solid #23304d; border-radius:14px; padding:.35rem .6rem; display:flex; align-items:center; gap:.4rem;
+  text-decoration:none; color:#cfe4ff; white-space:nowrap;
+}
+.provider-chip img{ height:18px; width:auto; }
+
+/* Botón favorito en card */
+.card .fav{
+  position:absolute; right:.5rem; top:.5rem; width:36px; height:36px; border-radius:10px;
+  background:rgba(0,0,0,.45); border:1px solid rgba(255,255,255,.08); display:grid; place-items:center; cursor:pointer;
+}
+.card .fav[data-active="true"]{ background:#1f2a46; border-color:#2e3e6b; }
+.card .fav svg{ width:18px; height:18px; fill:#cfe4ff; opacity:.9; }
+.card .fav[data-active="true"] svg{ fill:#ff6aa3; opacity:1; filter: drop-shadow(0 2px 6px rgba(255,106,163,.35)); }
+
+/* Skeletons de carga */
+.skel{ background: #131a2a; border-radius: 14px; width:180px; height:320px; position:relative; overflow:hidden; }
+.skel::after{
+  content:""; position:absolute; inset:0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent);
+  transform: translateX(-100%); animation: shimmer 1.2s infinite;
+}
+@keyframes shimmer{ 100%{ transform: translateX(100%); } }
+
+/* Desktop: cambiar carrusel por grilla */
+@media (min-width: 960px){
+  .scroller{ display:grid; grid-auto-flow:row; grid-template-columns: repeat(4, minmax(220px, 1fr)); gap:1rem; overflow:visible; }
+  .cards .card, .skel{ width:auto; }
+  .card img{ height:260px; }
+}
+
+/* Bottom nav: “flotada” */
+.bottom-nav{
+  border-top:1px solid rgba(255,255,255,.06);
+  box-shadow: 0 -8px 20px rgba(0,0,0,.35);
+  backdrop-filter: blur(8px);
+}
