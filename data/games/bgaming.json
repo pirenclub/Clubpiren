@@ -1,0 +1,38 @@
+{
+  "provider": "bgaming",
+  "games": [
+    {
+      "id": "bg-001",
+      "name": "Elvis Frog in Vegas",
+      "type": "slot",
+      "rtp": 96.0,
+      "volatility": "media",
+      "features": [
+        "jackpot"
+      ],
+      "tags": [
+        "vegas",
+        "frog"
+      ],
+      "demo_url": "",
+      "trailer_url": "",
+      "mobile": true,
+      "provably_fair": true
+    },
+    {
+      "id": "bg-002",
+      "name": "Blackjack",
+      "type": "mesa",
+      "rtp": 99.4,
+      "volatility": "baja",
+      "features": [],
+      "tags": [
+        "cartas"
+      ],
+      "demo_url": "",
+      "trailer_url": "",
+      "mobile": true,
+      "provably_fair": true
+    }
+  ]
+}

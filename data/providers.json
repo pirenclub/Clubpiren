@@ -1,0 +1,60 @@
+{
+  "providers": [
+    {
+      "id": "pgsoft",
+      "name": "PG Soft",
+      "slug": "pg-soft",
+      "short": "Estudio enfocado en slots móviles con arte muy pulido.",
+      "categories": [
+        "slots",
+        "mobile"
+      ],
+      "tags": [
+        "video slots",
+        "jackpots",
+        "3D",
+        "rápidos"
+      ],
+      "featured": true,
+      "rtp_note": null,
+      "licenses_note": "Completar según operador/región.",
+      "logo": "assets/providers/pgsoft.svg",
+      "website": "",
+      "cta_label": "Ver juegos",
+      "markets": [
+        ".com",
+        ".latam",
+        ".eu"
+      ]
+    },
+    {
+      "id": "bgaming",
+      "name": "BGaming",
+      "slug": "bgaming",
+      "short": "Portfolio de slots, mesa y títulos con verificación ‘provably-fair’.",
+      "categories": [
+        "slots",
+        "mesa",
+        "provably-fair",
+        "mobile"
+      ],
+      "tags": [
+        "blackjack",
+        "ruleta",
+        "crash-like",
+        "torneos"
+      ],
+      "featured": true,
+      "rtp_note": null,
+      "licenses_note": "Completar según operador/región.",
+      "logo": "assets/providers/bgaming.svg",
+      "website": "",
+      "cta_label": "Ver juegos",
+      "markets": [
+        ".com",
+        ".latam",
+        ".eu"
+      ]
+    }
+  ]
+}

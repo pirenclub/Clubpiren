@@ -1,0 +1,41 @@
+{
+  "provider": "pgsoft",
+  "games": [
+    {
+      "id": "pgs-001",
+      "name": "Fortune Tiger",
+      "type": "slot",
+      "rtp": 96.8,
+      "volatility": "media",
+      "features": [
+        "jackpot",
+        "buy-bonus"
+      ],
+      "tags": [
+        "asia",
+        "rápido"
+      ],
+      "demo_url": "",
+      "trailer_url": "",
+      "mobile": true,
+      "provably_fair": false
+    },
+    {
+      "id": "pgs-002",
+      "name": "Candy Bonanza",
+      "type": "slot",
+      "rtp": 96.7,
+      "volatility": "alta",
+      "features": [
+        "buy-bonus"
+      ],
+      "tags": [
+        "dulces"
+      ],
+      "demo_url": "",
+      "trailer_url": "",
+      "mobile": true,
+      "provably_fair": false
+    }
+  ]
+}
