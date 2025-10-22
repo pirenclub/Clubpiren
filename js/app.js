@@ -1,9 +1,11 @@
+import {getBalance,setBalance,addBalance,renderBalance} from './wallet.js';
 // JS funcional
 const $ = (sel, el=document)=> el.querySelector(sel);
 const $$ = (sel, el=document)=> [...el.querySelectorAll(sel)];
 function toSlug(s){ return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,''); }
 async function loadJSON(url){ const r = await fetch(url); return r.json(); }
 const state = { games: [], winners: [] };
+renderBalance();
 
 function gameCard(game){
   const provSlug = toSlug(game.provider_slug || game.provider);
@@ -59,6 +61,17 @@ function initFilters(){
 }
 
 function initAddFunds(){
+  // Modo dev: acreditación de prueba
+  const dev = location.hash.includes("dev");
+  if(dev){
+    const menu = dialog.querySelector("menu");
+    const testBtn = document.createElement("button");
+    testBtn.className = "btn";
+    testBtn.textContent = "+ Acreditar prueba $1000";
+    testBtn.addEventListener("click", (e)=>{ e.preventDefault(); addBalance(1000); alert("Se acreditaron $1000 demo."); dialog.close(); });
+    menu.prepend(testBtn);
+  }
+
   const dialog = $("#addFundsModal");
   $("#addFundsBtn").addEventListener("click", ()=> dialog.showModal());
   const wa = $("#waLink");
@@ -72,6 +85,11 @@ function initAddFunds(){
   amount.addEventListener("input", update);
   curr.addEventListener("change", update);
   update();
+  // Abrir modal si viene de juego con #deposit
+  if(location.hash.includes('deposit')){
+    setTimeout(()=>document.getElementById("addFundsModal").showModal(), 150);
+  }
+
 }
 
 function initLogin(){
