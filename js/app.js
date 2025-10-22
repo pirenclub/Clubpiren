@@ -43,6 +43,26 @@ renderBalance();
     </div>
   </article>`;
 }
+function initSearch(){
+  const input = $("#searchInput");
+  const clear = $("#clearSearch");
+  if(!input) return;
+
+  function apply(){
+    const q = (input.value || "").trim().toLowerCase();
+    $$("#favoritesRow .card").forEach(card=>{
+      const title = card.querySelector("h3")?.textContent.toLowerCase() || "";
+      const prov  = card.querySelector(".prov")?.textContent.toLowerCase() || "";
+      const ok = !q || title.includes(q) || prov.includes(q);
+      card.style.display = ok ? "" : "none";
+    });
+  }
+  input.addEventListener("input", apply);
+  clear?.addEventListener("click", ()=>{ input.value=""; apply(); input.focus(); });
+
+  // tecla ESC limpia
+  input.addEventListener("keydown", (e)=>{ if(e.key==="Escape"){ input.value=""; apply(); } });
+}
 
 }
 
