@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin • Aprobaciones</title>
+  <style>
+    body{margin:0;background:#0e0f13;color:#e8eaf2;font:500 15px/1.5 ui-sans-serif,system-ui}
+    .wrap{max-width:860px;margin:auto;padding:28px}
+    input,button{padding:10px 12px;border-radius:8px;border:1px solid #232633;background:#161823;color:#e8eaf2}
+    .row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+    .muted{color:#aeb3c2}
+    pre{background:#161823;padding:12px;border-radius:8px;white-space:pre-wrap}
+    .btn{background:#ff5ea8;color:#0b0c12;border:0}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <a href="./index.html" class="muted">← Volver</a>
+  <h1>Admin • Aprobaciones</h1>
+
+  <div id="gate" style="position:fixed;inset:0;background:#0e0f13;display:grid;place-items:center;z-index:9999">
+    <form id="login_form" style="background:#161823;padding:20px;border-radius:12px;min-width:280px;color:#e8eaf2">
+      <h3 style="margin:0 0 10px">Ingresar</h3>
+      <label>Usuario (ID)
+        <input name="user_id" required style="width:100%;padding:10px;border-radius:8px;margin:6px 0">
+      </label>
+      <label>PIN
+        <input name="pin" type="password" required minlength="4" style="width:100%;padding:10px;border-radius:8px;margin:6px 0">
+      </label>
+      <button style="width:100%;padding:10px;border-radius:8px;font-weight:700">Entrar</button>
+      <p id="login_err" style="color:#f88"></p>
+      <p class="muted">Acceso solo operadores.</p>
+    </form>
+  </div>
+
+  <section>
+    <h3>Aprobar depósito</h3>
+    <form id="approve_form" class="row">
+      <input name="tx_id" placeholder="tx_id" required>
+      <input name="user_id" placeholder="user_id" required>
+      <input name="nombre" placeholder="nombre">
+      <button class="btn">Aprobar</button>
+    </form>
+    <pre id="out" class="muted">Esperando…</pre>
+  </section>
+
+  <section>
+    <h3>Consultar saldo</h3>
+    <form id="bal_form" class="row">
+      <input name="user_id" placeholder="user_id (opcional: vacío = mi saldo)">
+      <button class="btn" type="submit">Consultar</button>
+    </form>
+    <pre id="bal_out" class="muted">—</pre>
+  </section>
+</div>
+
+<script src="./js/config.js"></script>
+<script src="./js/auth.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const out = $("#out");
+const balOut = $("#bal_out");
+
+document.getElementById('approve_form').onsubmit = async (e)=>{
+  e.preventDefault();
+  out.textContent = "Procesando…";
+  const form = Object.fromEntries(new FormData(e.target));
+  const res = await window.__api({action:'approve', ...form});
+  out.textContent = JSON.stringify(res,null,2);
+};
+
+document.getElementById('bal_form').onsubmit = async (e)=>{
+  e.preventDefault();
+  balOut.textContent = "Consultando…";
+  const form = Object.fromEntries(new FormData(e.target));
+  const res = await window.__api({action:'balance', ...form});
+  balOut.textContent = JSON.stringify(res,null,2);
+};
+</script>
+</body>
+</html>

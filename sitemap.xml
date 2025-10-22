@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://<tu-usuario>.github.io/<tu-repo>/index.html</loc></url>
+  <url><loc>https://<tu-usuario>.github.io/<tu-repo>/proveedores/pg-soft.html</loc></url>
+  <url><loc>https://<tu-usuario>.github.io/<tu-repo>/proveedores/bgaming.html</loc></url>
+  <url><loc>https://<tu-usuario>.github.io/<tu-repo>/privacy.html</loc></url>
+  <url><loc>https://<tu-usuario>.github.io/<tu-repo>/terms.html</loc></url>
+  <url><loc>https://<tu-usuario>.github.io/<tu-repo>/responsable.html</loc></url>
+</urlset>
