@@ -4,6 +4,26 @@ const $ = (sel, el=document)=> el.querySelector(sel);
 const $$ = (sel, el=document)=> [...el.querySelectorAll(sel)];
 function toSlug(s){ return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,''); }
 async function loadJSON(url){ const r = await fetch(url); return r.json(); }
+const FAV_KEY = "mb_favs";
+function loadFavs(){ try{ return new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]")); }catch{ return new Set(); } }
+function saveFavs(s){ localStorage.setItem(FAV_KEY, JSON.stringify([...s])); }
+function hookFavButtons(){
+  $$(".fav").forEach(btn=>{
+    btn.addEventListener("click", (e)=>{
+      e.stopPropagation();
+      const id = btn.dataset.id;
+      const favs = loadFavs();
+      favs.has(id) ? favs.delete(id) : favs.add(id);
+      saveFavs(favs);
+      btn.setAttribute("data-active", favs.has(id));
+    });
+  });
+}
+function renderSkeletons(rowId, n=6){
+  const row = document.getElementById(rowId);
+  row.innerHTML = Array.from({length:n}).map(()=>`<div class="skel"></div>`).join("");
+}
+
 const state = { games: [], winners: [] };
 renderBalance();
 
