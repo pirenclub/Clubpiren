@@ -1,0 +1,24 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jugar — MB Casino</title><link rel="stylesheet" href="css/styles.css"></head>
+<body><header class="topbar"><a href="index.html" class="icon-btn" aria-label="Volver">←</a><strong style="margin-left:.4rem">Juego</strong></header>
+<main class="section"><div id="gameInfo"></div></main>
+<script>
+function q(k){return new URLSearchParams(location.search).get(k)}
+fetch("games.json").then(r=>r.json()).then(list=>{
+  const g=list.find(x=>x.id===q("id"));
+  const el=document.getElementById("gameInfo");
+  if(!g){el.innerHTML="<p>No se encontró el juego.</p>";return;}
+  el.innerHTML=`<article class="card" style="width:100%">
+    <img src="${g.img}" alt="${g.title}" style="height:auto;max-height:360px;object-fit:cover">
+    <div class="body"><h3>${g.title}</h3>
+      <div class="meta"><span class="prov">${g.provider}</span><span class="players">👥 ${g.players}</span></div>
+      <p style="margin-top:.6rem">Para jugar con dinero real, cargá saldo con el botón de abajo. También podemos habilitar demo si el proveedor lo permite.</p>
+      <div style="display:flex;gap:.6rem;margin-top:.6rem">
+        <a class="btn" id="playReal" href="#">Cargar saldo y jugar</a>
+        <a class="btn ghost" id="playDemo" href="#">Probar demo</a>
+      </div>
+    </div></article>`;
+  document.getElementById("playReal").addEventListener("click",e=>{e.preventDefault();location.href="index.html#deposit";});
+  document.getElementById("playDemo").addEventListener("click",e=>{e.preventDefault();alert("Demo no disponible aún. Conectaremos el iframe cuando lo tengas.");});
+});
+</script></body></html>
