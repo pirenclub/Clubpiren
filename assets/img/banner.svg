@@ -1,0 +1,8 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 500'>
+  <defs><linearGradient id='g' x1='0' x2='1'><stop offset='0' stop-color='#1B264F'/><stop offset='1' stop-color='#2D6A9F'/></linearGradient></defs>
+  <rect width='1200' height='500' fill='url(#g)'/>
+  <g fill='#fff' font-family='Arial Black, Arial, sans-serif'>
+    <text x='80' y='180' font-size='64'>SORTEO DE GIROS GRATIS</text>
+    <text x='80' y='250' font-size='42' opacity='.9'>GANA HASTA 2,500 GIROS — HALLOWEEN</text>
+  </g>
+</svg>

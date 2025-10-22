@@ -1,0 +1,5 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 800'>
+  <defs><linearGradient id='g2' x1='0' x2='1' y1='0' y2='1'><stop offset='0' stop-color='#44107A'/><stop offset='1' stop-color='#FF1357'/></linearGradient></defs>
+  <rect width='600' height='800' rx='40' fill='url(#g2)'/>
+  <text x='300' y='420' text-anchor='middle' font-size='72' fill='#fff' font-family='Arial Black, Arial, sans-serif'>JUEGO 2</text>
+</svg>
