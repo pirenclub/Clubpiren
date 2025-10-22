@@ -85,6 +85,8 @@ function renderGames(){
   const sample = state.games.slice(0,6);
   continueRow.innerHTML = sample.map(gameCard).join("");
   favoritesRow.innerHTML = state.games.map(gameCard).join("");
+  hookFavButtons();
+
 }
 
 function renderWinners(){
