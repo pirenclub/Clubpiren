@@ -1,0 +1,70 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jugar — MB Casino</title><link rel="stylesheet" href="css/styles.css"></head>
+<body><header class="topbar"><a href="index.html" class="icon-btn" aria-label="Volver">←</a><strong style="margin-left:.4rem">Juego</strong></header>
+<main class="section"><div id="gameInfo"></div>
+  <style>
+    .slot {background:#0d111a;border:1px solid #1f2940;border-radius:14px;padding:1rem;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+    .reels{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin:.6rem 0}
+    .cell{height:80px;border-radius:10px;display:grid;place-items:center;font-size:38px;background:#151f32;border:1px solid #2a3657}
+    .controls{display:flex;gap:.6rem;align-items:center}
+    .controls input{width:120px}
+  </style>
+  <div class="slot">
+    <div class="reels">
+      <div class="cell" id="r1">🍒</div>
+      <div class="cell" id="r2">🍋</div>
+      <div class="cell" id="r3">⭐</div>
+    </div>
+    <div class="controls">
+      <label class="input" style="flex:1;min-width:0">
+        <span>Apuesta (ARS)</span>
+        <input type="number" id="bet" value="10" min="1" step="1">
+      </label>
+      <button class="btn" id="spin">Girar</button>
+    </div>
+    <p id="result" style="margin:.4rem 0 0;color:#9aa3b2"></p>
+  </div>
+  <script type="module">
+    import {getBalance, addBalance} from './js/wallet.js';
+    const symbols = ['🍒','🍋','⭐','🔔','7️⃣'];
+    const r1 = document.getElementById('r1');
+    const r2 = document.getElementById('r2');
+    const r3 = document.getElementById('r3');
+    const res = document.getElementById('result');
+    const bet = document.getElementById('bet');
+    document.getElementById('spin').addEventListener('click', ()=>{
+      const b = Math.max(1, Number(bet.value)||1);
+      // demo: no descuenta saldo, solo informa
+      const s = [symbols[Math.floor(Math.random()*symbols.length)],
+                 symbols[Math.floor(Math.random()*symbols.length)],
+                 symbols[Math.floor(Math.random()*symbols.length)]];
+      [r1.textContent, r2.textContent, r3.textContent] = s;
+      let won = 0;
+      if(s[0]===s[1] && s[1]===s[2]){ won = b*10; }
+      else if(s[0]===s[1] || s[1]===s[2]){ won = b*2; }
+      if(won>0){ res.textContent = `🎉 ¡Ganaste ${won} ARS (demo)!`; addBalance(won); }
+      else { res.textContent = 'Sin premio. ¡Probá otra vez!'; }
+    });
+  </script>
+
+</main>
+<script>
+function q(k){return new URLSearchParams(location.search).get(k)}
+fetch("games.json").then(r=>r.json()).then(list=>{
+  const g=list.find(x=>x.id===q("id"));
+  const el=document.getElementById("gameInfo");
+  if(!g){el.innerHTML="<p>No se encontró el juego.</p>";return;}
+  el.innerHTML=`<article class="card" style="width:100%">
+    <img src="${g.img}" alt="${g.title}" style="height:auto;max-height:360px;object-fit:cover">
+    <div class="body"><h3>${g.title}</h3>
+      <div class="meta"><span class="prov">${g.provider}</span><span class="players">👥 ${g.players}</span></div>
+      <p style="margin-top:.6rem">Para jugar con dinero real, cargá saldo con el botón de abajo. También podemos habilitar demo si el proveedor lo permite.</p>
+      <div style="display:flex;gap:.6rem;margin-top:.6rem">
+        <a class="btn" id="playReal" href="#">Cargar saldo y jugar</a>
+        <a class="btn ghost" id="playDemo" href="#">Probar demo</a>
+      </div>
+    </div></article>`;
+  document.getElementById("playReal").addEventListener("click",e=>{e.preventDefault();location.href="index.html#deposit";});
+  document.getElementById("playDemo").addEventListener("click",e=>{e.preventDefault();alert("Demo no disponible aún. Conectaremos el iframe cuando lo tengas.");});
+});
+</script></body></html>
