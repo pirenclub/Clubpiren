@@ -63,6 +63,19 @@ function initSearch(){
   // tecla ESC limpia
   input.addEventListener("keydown", (e)=>{ if(e.key==="Escape"){ input.value=""; apply(); } });
 }
+async function bootstrap(){
+  renderSkeletons("continueRow", 6);
+  renderSkeletons("favoritesRow", 8);
+
+  state.games = await loadJSON("games.json");
+  renderGames(); renderWinners();
+  hookCardClicks();
+  hookFavButtons();
+  initFilters(); initSearch();
+  initAddFunds(); initLogin();
+  initDrawerAndNav(); initIframePlayer && initIframePlayer();
+}
+bootstrap();
 
 }
 
