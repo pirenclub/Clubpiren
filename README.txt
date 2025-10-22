@@ -1,4 +1,4 @@
-Pasos:
-1) Subí todo esto a tu repo (raíz) y activá GitHub Pages.
-2) Cambiá el teléfono en js/app.js (const phone = "549...").
-3) Para agregar proveedores: agrega juegos en games.json con "provider" y "provider_slug", añade un chip en index.html (data-filter="slug") y crea la página en /proveedores/{slug}.html (puedes duplicar cualquiera).
+Cómo usar:
+1) Sube todo este repo a GitHub. Render leerá 'render.yaml' y desplegará /server.
+2) En tu repo de Pages sube SOLO el contenido de /frontend. En 'frontend/js/config.js' poné API_BASE con la URL de Render.
+3) Probar: /frontend/juego.html → 'Jugar (mock backend)' abre iframe con el proveedor simulado.

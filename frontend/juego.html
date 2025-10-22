@@ -1,0 +1,34 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jugar — MB Casino</title><link rel="stylesheet" href="css/styles.css"></head>
+<body><header class="topbar"><a href="index.html" class="icon-btn" aria-label="Volver">←</a><strong style="margin-left:.4rem">Juego</strong></header>
+<main class="section"><div id="gameInfo"></div></main>
+<script type="module">
+  import {API_BASE} from './js/config.js';
+  function q(k){return new URLSearchParams(location.search).get(k)}
+  const id=q('id');
+  fetch('games.json').then(r=>r.json()).then(list=>{
+    const g=list.find(x=>x.id===id);
+    const el=document.getElementById('gameInfo');
+    if(!g){el.innerHTML='<p>No se encontró el juego.</p>';return;}
+    el.innerHTML=`<article class="card" style="width:100%">
+      <img src="${g.img}" alt="${g.title}" style="height:auto;max-height:360px;object-fit:cover">
+      <div class="body"><h3>${g.title}</h3>
+        <div class="meta"><span class="prov">${g.provider}</span><span class="players">👥 ${g.players}</span></div>
+        <p style="margin-top:.6rem">Podés probar **demo** o lanzar juego (mock backend) que abre un iframe.</p>
+        <div style="display:flex;gap:.6rem;margin-top:.6rem">
+          <a class="btn" id="playReal" href="#">Jugar (mock backend)</a>
+          <a class="btn ghost" id="playDemo" href="#">Probar demo</a>
+        </div>
+      </div></article>`;
+    document.getElementById('playDemo').addEventListener('click',e=>{e.preventDefault(); location.href = 'index.html#demo';});
+    document.getElementById('playReal').addEventListener('click',async e=>{
+      e.preventDefault();
+      try{
+        const r=await fetch(API_BASE+'/api/sessions/launch',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:'maikol',gameId:g.id,currency:'ARS',mode:'real'})});
+        const data=await r.json();
+        if(data.launchUrl){ sessionStorage.setItem('launchUrl', data.launchUrl); location.href = 'index.html#play'; }
+        else{ alert('No se pudo lanzar el juego.'); }
+      }catch(err){ alert('Error de red: '+err); }
+    });
+  });
+</script></body></html>
