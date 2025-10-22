@@ -1,0 +1,14 @@
+services:
+- type: web
+  name: mb-casino-mock
+  env: node
+  rootDir: server
+  plan: free
+  buildCommand: "npm install"
+  startCommand: "node server.js"
+  autoDeploy: true
+  envVars:
+  - key: CORS_ORIGIN
+    value: https://pirenclub.github.io
+  - key: PUBLIC_URL
+    fromServiceUrl: true
