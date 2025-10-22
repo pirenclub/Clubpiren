@@ -2,9 +2,7 @@
 const $ = (sel, el=document)=> el.querySelector(sel);
 const $$ = (sel, el=document)=> [...el.querySelectorAll(sel)];
 function toSlug(s){ return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,''); }
-
 async function loadJSON(url){ const r = await fetch(url); return r.json(); }
-
 const state = { games: [], winners: [] };
 
 function gameCard(game){
@@ -34,6 +32,17 @@ function renderWinners(){
     state.winners = names.map((n)=>({name:n, amount:(200+Math.random()*150).toFixed(2), currency:"ARSM"}));
   }
   row.innerHTML = state.winners.map(w=>`<div class="winner"><div class="name">@${w.name}</div><div class="amount">${w.amount} ${w.currency}</div></div>`).join("");
+}
+
+// Navegación: click en cards -> juego.html?id=...
+function hookCardClicks(){
+  document.querySelectorAll("#continueRow .card, #favoritesRow .card").forEach((card)=>{
+    card.addEventListener("click", ()=>{
+      const title = card.querySelector("h3")?.textContent || "";
+      const g = state.games.find(x=>x.title===title);
+      if(g){ location.href = `juego.html?id=${g.id}`; }
+    });
+  });
 }
 
 function initFilters(){
@@ -80,13 +89,35 @@ function initLogin(){
   });
 }
 
+// Drawer y bottom nav
+function initDrawerAndNav(){
+  const drawer = $("#drawer");
+  $("#navMenu")?.addEventListener("click", (e)=>{ e.preventDefault(); drawer.classList.add("open"); });
+  $("#drawerClose")?.addEventListener("click", ()=> drawer.classList.remove("open"));
+  drawer?.addEventListener("click", (e)=>{ if(e.target===drawer) drawer.classList.remove("open"); });
+
+  $("#navExplore")?.addEventListener("click", (e)=>{ e.preventDefault(); $("#favoritos").scrollIntoView({behavior:"smooth"}); });
+  $("#navCasino")?.addEventListener("click", (e)=>{ e.preventDefault(); window.scrollTo({top:0,behavior:"smooth"}); });
+  $("#navSports")?.addEventListener("click", (e)=>{ e.preventDefault(); location.href = "proveedores/hacksawgaming.html"; });
+  $("#navChat")?.addEventListener("click", (e)=>{
+    e.preventDefault();
+    const phone = "5491112345678"; // cambia por tu número
+    const text = encodeURIComponent("Hola, tengo una consulta sobre MB Casino.");
+    location.href = `https://wa.me/${phone}?text=${text}`;
+  });
+
+  $("#openDeposit")?.addEventListener("click", (e)=>{ e.preventDefault(); drawer.classList.remove("open"); $("#addFundsModal").showModal(); });
+  $("#openLogin")?.addEventListener("click", (e)=>{ e.preventDefault(); drawer.classList.remove("open"); $("#loginModal").showModal(); });
+}
+
 async function bootstrap(){
   state.games = await loadJSON("games.json");
   renderGames();
   renderWinners();
+  hookCardClicks();
   initFilters();
   initAddFunds();
   initLogin();
+  initDrawerAndNav();
 }
-
 bootstrap();
