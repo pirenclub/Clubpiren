@@ -7,16 +7,23 @@ async function loadJSON(url){ const r = await fetch(url); return r.json(); }
 const state = { games: [], winners: [] };
 renderBalance();
 
-function gameCard(game){
+ function gameCard(game){
   const provSlug = toSlug(game.provider_slug || game.provider);
-  return `<article class="card" data-provider="${provSlug}">
+  const favs = loadFavs();
+  const isFav = favs.has(game.id);
+  return `<article class="card" data-provider="${provSlug}" tabindex="0">
     ${game.isLive ? '<span class="badge">L</span>' : ''}
-    <img src="${game.img}" alt="${game.title}">
+    <button class="fav" data-id="${game.id}" data-active="${isFav}">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10z"/></svg>
+    </button>
+    <img src="${game.img}" alt="${game.title}" loading="lazy">
     <div class="body">
       <h3>${game.title}</h3>
       <div class="meta"><span class="prov">${game.provider}</span><span class="players">👥 ${game.players}</span></div>
     </div>
   </article>`;
+}
+
 }
 
 function renderGames(){
