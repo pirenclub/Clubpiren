@@ -47,7 +47,14 @@
   <section class="section" id="favoritos">
     <div class="section-title-row">
       <h2 class="section-title">Favoritos</h2>
-      <div class="filters">
+      <div class="searchbar">
+  <label class="input" style="flex:1">
+    <span>Buscar juego o proveedor</span>
+    <input id="searchInput" placeholder="Ej: Rip City, BGaming, Live…">
+  </label>
+  <button class="icon-btn" id="clearSearch" title="Limpiar">✕</button>
+</div>
+
         <button class="chip active" data-filter="todo">Todo</button>
         <button class="chip" data-filter="bgaming">BGaming</button>
         <button class="chip" data-filter="pgsoft">PG Soft</button>
