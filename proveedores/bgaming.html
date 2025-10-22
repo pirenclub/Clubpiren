@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BGaming - MB Casino</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="../index.html" class="icon-btn" aria-label="Volver">←</a>
+    <strong style="margin-left:.4rem">BGaming</strong>
+  </header>
+  <main class="section">
+    <h2 class="section-title">Juegos BGaming</h2>
+    <div class="cards scroller" id="row"></div>
+  </main>
+  <script>
+    fetch("../games.json").then(r=>r.json()).then(data=>{
+      const row = document.getElementById("row");
+      row.innerHTML = data.filter(g=>g.provider.toLowerCase().includes('bga')).map(g=>`
+      <article class="card">
+        <img src="../${g.img}" alt="${g.title}">
+        <div class="body">
+          <h3>${g.title}</h3>
+          <div class="meta"><span class="prov">${g.provider}</span><span class="players">👥 ${g.players}</span></div>
+        </div>
+      </article>`).join("");
+    });
+  </script>
+</body>
+</html>
